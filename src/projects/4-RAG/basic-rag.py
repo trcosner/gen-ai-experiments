@@ -57,9 +57,9 @@ output_parser = StrOutputParser()
 chain = prompt | llm | output_parser
 
 # Define the question
-question = "How could this person help me build an agentic ai platform?"
+question = "What is this candidate's full name and email?"
 
-# Get relevant context from vector store (increased to 3 chunks for better coverage)
+# Get relevant context from vector store 
 relevant_docs = vector_store.similarity_search(question, k=3)
 context = "\n\n".join([doc.page_content for doc in relevant_docs])
 
