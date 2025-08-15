@@ -13,24 +13,25 @@ set_environment()
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.messages import HumanMessage
+from langchain_core.output_parsers import StrOutputParser
 
 prompt = ChatPromptTemplate.from_messages([
     ("system", "You are a helpful coding assistant with the skill of a senior software engineer."),
     ("human", "{input}")
 ])
 
-# llm = ChatAnthropic(
-#     model="claude-sonnet-4-20250514", 
-#     max_tokens=6000,
-#     thinking={"type": "enabled", "budget_tokens": 2000},
-# )
-
-llm = ChatOpenAI(
-    model="o3-mini",
-    reasoning_effort="high",
+llm = ChatAnthropic(
+    model="claude-sonnet-4-20250514", 
+    max_tokens=6000,
+    thinking={"type": "enabled", "budget_tokens": 2000},
 )
 
-chain = prompt | llm
+# llm = ChatOpenAI(
+#     model="o3-mini",
+#     reasoning_effort="high",
+# )
+outputParser = StrOutputParser()
+chain = prompt | llm | outputParser
 
 input = """
 Design and implement a function that finds the shortest path between any two nodes in a weighted directed graph, but with the constraint that the path cannot use more than K edges, and must avoid nodes that are in a given "forbidden" set. The function should handle negative edge weights (but no negative cycles) and return both the shortest distance and the actual path.
