@@ -1,0 +1,58 @@
+version: '3.8'
+
+services:
+  ollama:
+    image: ollama/ollama:latest
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    environment:
+      - OLLAMA_HOST=0.0.0.0
+    restart: unless-stopped
+    # Uncomment the following lines if you have an NVIDIA GPU
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: 1
+    #           capabilities: [gpu]
+
+  ollama-setup:
+    image: ollama/ollama:latest
+    volumes:
+      - ollama_data:/root/.ollama
+    depends_on:
+      - ollama
+    environment:
+      - OLLAMA_HOST=http://ollama:11434
+    entrypoint: >
+      sh -c "
+        echo 'Waiting for Ollama server...' &&
+        until ollama list --server http://ollama:11434 > /dev/null 2>&1; do
+          echo 'Waiting for Ollama to be ready...' &&
+          sleep 5
+        done &&
+        echo 'Pulling deepseek-r1:1.5b...' &&
+        ollama pull deepseek-r1:1.5b --server http://ollama:11434 &&
+        echo 'Model pulled successfully!'
+      "
+    restart: "no"
+
+  gen-ai-experiments:
+    build: .
+    volumes:
+      - ./src:/src
+    stdin_open: true
+    tty: true
+    depends_on:
+      - ollama
+      - ollama-setup
+    environment:
+      - OLLAMA_BASE_URL=http://ollama:11434
+    networks:
+      - default
+
+volumes:
+  ollama_data:

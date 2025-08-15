@@ -19,3 +19,11 @@
 #### Back in container: Run immediately
 
 `python projects/2-chains/my_experiment.py`
+
+### moving to docker-compose
+
+`docker-compose build`
+
+### running with docker-compose network
+
+`docker-compose exec gen-ai-experiments bash`

@@ -39,6 +39,7 @@ def set_environment():
     # os.environ['HUGGINGFACE_API_TOKEN'] = 'your-huggingface-token-here'
     # os.environ['COHERE_API_KEY'] = 'your-cohere-api-key-here'
     # os.environ['SERPAPI_API_KEY'] = 'your-serpapi-key-here'  # For web search
+    # os.environ['REPLICATE_API_TOKEN'] = 'your-replicate-api-token-here'  # For Replicate models
     
     print("✅ Environment variables set successfully!")
 
