@@ -43,6 +43,9 @@ config.py
 *.pem
 credentials.json
 
+# Personal/sensitive documents
+resume.pdf
+
 # MacOS
 .DS_Store
 

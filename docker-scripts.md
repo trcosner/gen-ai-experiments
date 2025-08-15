@@ -23,6 +23,7 @@
 ### moving to docker-compose
 
 `docker-compose build`
+`docker-compose up -d`
 
 ### running with docker-compose network
 
