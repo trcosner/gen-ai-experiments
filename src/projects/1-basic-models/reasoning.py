@@ -10,7 +10,8 @@ from config import set_environment
 # Set environment variables (no more print statement to suppress)
 set_environment()
 
-from langchain_openai import ChatOpenAI
+#from langchain_openai import ChatOpenAI
+from langchain_anthropic import ChatAnthropic
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.messages import HumanMessage
 from langchain_core.output_parsers import StrOutputParser
@@ -30,6 +31,7 @@ llm = ChatAnthropic(
 #     model="o3-mini",
 #     reasoning_effort="high",
 # )
+
 outputParser = StrOutputParser()
 chain = prompt | llm | outputParser
 
@@ -49,4 +51,4 @@ Provide the complete implementation with test cases.
 
 response = chain.invoke({"input": input})
 
-print(response.content)
+print(response)
